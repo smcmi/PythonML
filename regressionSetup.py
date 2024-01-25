@@ -67,7 +67,7 @@ def poly_TTS_scale(X,y,degree,train_size,random_state):
 	import numpy as np
 	
 	X_train = polyFeatures(X,degree=degree)
-	
+	print('pttss')
 	if train_size in [1,100]:						# Will train on full model, no test set. Scale and return.
 		
 		X_train = X
