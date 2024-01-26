@@ -1,9 +1,12 @@
+import importlib
+import regressionSetup
+importlib.reload(regressionSetup)
+
 def runLogReg(X, y, degree, train_size, count_plot=True, Cs=10, cv=5, random_state=101, max_iter=1000000, l1_ratios=[0.1,0.5,0.7,0.9,0.95,0.99,1],solver='saga', penalty='elasticnet', scoring='neg_mean_squared_error'):
 	
 	import matplotlib.pyplot as plt
 	import seaborn as sns
 	import numpy as np
-	from regressionSetup import poly_TTS_scale
 	from sklearn.linear_model import LogisticRegressionCV
 	
 	posRatio = y.sum()/len(y)
@@ -16,7 +19,7 @@ def runLogReg(X, y, degree, train_size, count_plot=True, Cs=10, cv=5, random_sta
 	if count_plot:
 		sns.countplot(x=y)
 	
-	X_train, X_test, y_train, y_test = poly_TTS_scale(X=X,y=y,degree=degree,train_size=train_size,random_state=random_state)
+	X_train, X_test, y_train, y_test = regressionSetup.poly_TTS_scale(X=X,y=y,degree=degree,train_size=train_size,random_state=random_state)
 	
 	log_model = LogisticRegressionCV(Cs=Cs,cv=cv,random_state=random_state,max_iter=max_iter,l1_ratios=l1_ratios,solver=solver,penalty=penalty,scoring=scoring).fit(X_train,y_train)
 	
@@ -32,11 +35,10 @@ def runLogReg(X, y, degree, train_size, count_plot=True, Cs=10, cv=5, random_sta
 	
 def runKNeighbors(X, y, train_size, degree=1, k_neighbors=list(range(1,20)), showResPlot = True, cv=5, random_state=101):
 
-	from regressionSetup import poly_TTS_scale
 	from sklearn.neighbors import KNeighborsClassifier
 	from sklearn.model_selection import GridSearchCV
 	
-	X_train, X_test, y_train, y_test = poly_TTS_scale(X=X,y=y,degree=degree,train_size=train_size,random_state=random_state)
+	X_train, X_test, y_train, y_test = regressionSetup.poly_TTS_scale(X=X,y=y,degree=degree,train_size=train_size,random_state=random_state)
 	
 	param_grid = {'n_neighbors':k_neighbors}
 	
@@ -54,9 +56,8 @@ def runSVMClassifier(X, y, train_size, degree=1, param_grid = {'C':[0.01,0.1,1],
 	
 	from sklearn.svm import SVC
 	from sklearn.model_selection import GridSearchCV
-	from regressionSetup import poly_TTS_scale
 	
-	X_train, X_test, y_train, y_test = poly_TTS_scale(X=X,y=y,degree=degree,train_size=train_size,random_state=random_state)
+	X_train, X_test, y_train, y_test = regressionSetup.poly_TTS_scale(X=X,y=y,degree=degree,train_size=train_size,random_state=random_state)
 	
 	SVM_model = GridSearchCV(SVC(),param_grid).fit(X_train,y_train)
 	# SVC parameters: kernel:['linear','poly' (+'degree'), 'rbf', 'sigmoid', 'precomputed'], C (regularization strength proportional to 1/C, L2 penalty), gamma: (kernel coefficient for 'rbf', 'poly', or 'sigmoid')

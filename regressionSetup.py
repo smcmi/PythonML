@@ -63,10 +63,10 @@ def scaling(X_train,X_test):
 	
 def poly_TTS_scale(X,y,degree,train_size,random_state):
 	"""Performs polynomial of degree 'degree' transformation on features 'X', train_test_split with train proportion/percentage 'train_size', and scales features by training set"""
-	
+	print('hereasdfjkl')
 	import numpy as np
 	
-	X_train = polyFeatures(X,degree=degree)
+	X = polyFeatures(X,degree=degree)
 	
 	if train_size in [1,100]:						# Will train on full model, no test set. Scale and return.
 		
