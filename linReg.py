@@ -5,9 +5,8 @@ importlib.reload(regressionSetup)
 def runLasso(X, y, degree, train_size, random_state=101, eps=0.1, n_alphas=100, cv=5, max_iter=1000000, verbose=1):
 	"""Performs polynomial regression of degree 'degree' on features 'X' with known labels 'y', including feature scaling and train/test split with percentage or proportion 'train_size' going into training set, and then minimizes RSS + L1 penalty (LASSO method, L1 is sum of abs. values of coeff's). Adjustable parameters are 'eps' [0.1] (ratio of alpha parameters), 'n_alphas' [100] (number of alpha parameters to test along regularization path), 'cv' [5] ("k" in k-fold cross-validation), and 'max_iter' [1e6] (maximum number of iterations in optimization scheme)."""
 	
-	print(X.shape)
 	X_train, X_test, y_train, y_test = regressionSetup.poly_TTS_scale(X,y,degree,train_size,random_state)	
-	print(X_train.shape)
+	
 	from sklearn.linear_model import LassoCV
 	
 	lasso_model = LassoCV(eps=eps, n_alphas=n_alphas, cv=cv, max_iter=max_iter).fit(X_train,y_train)
